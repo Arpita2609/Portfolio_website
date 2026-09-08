@@ -1,53 +1,74 @@
 /* =========================================================
-   MOBILE NAVBAR
+   NAVBAR MOBILE MENU
 ========================================================= */
 
 const menuBtn = document.getElementById("menuBtn");
 const navLinks = document.getElementById("navLinks");
 
 if (menuBtn && navLinks) {
+  menuBtn.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
 
-    menuBtn.addEventListener("click", () => {
+    const icon = menuBtn.querySelector("i");
 
-        navLinks.classList.toggle("active");
+    if (navLinks.classList.contains("active")) {
+      icon.classList.remove("fa-bars");
+      icon.classList.add("fa-xmark");
+      menuBtn.setAttribute("aria-label", "Close menu");
+    } else {
+      icon.classList.remove("fa-xmark");
+      icon.classList.add("fa-bars");
+      menuBtn.setAttribute("aria-label", "Open menu");
+    }
+  });
 
-        const icon = menuBtn.querySelector("i");
+  // Close menu after clicking a link
+  navLinks.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      navLinks.classList.remove("active");
 
-        if (navLinks.classList.contains("active")) {
+      const icon = menuBtn.querySelector("i");
 
-            icon.classList.remove("fa-bars");
-            icon.classList.add("fa-xmark");
+      icon.classList.remove("fa-xmark");
+      icon.classList.add("fa-bars");
 
-        } else {
-
-            icon.classList.remove("fa-xmark");
-            icon.classList.add("fa-bars");
-
-        }
-
+      menuBtn.setAttribute("aria-label", "Open menu");
     });
-
-
-    /* Close menu after clicking a link */
-
-    navLinks.querySelectorAll("a").forEach(link => {
-
-        link.addEventListener("click", () => {
-
-            navLinks.classList.remove("active");
-
-            const icon = menuBtn.querySelector("i");
-
-            if (icon) {
-                icon.classList.remove("fa-xmark");
-                icon.classList.add("fa-bars");
-            }
-
-        });
-
-    });
-
+  });
 }
+
+
+/* =========================================================
+   ACTIVE NAVIGATION LINK
+========================================================= */
+
+const sections = document.querySelectorAll("section[id]");
+const navItems = document.querySelectorAll(".nav-links a");
+
+function updateActiveNav() {
+  const scrollPosition = window.scrollY + 150;
+
+  sections.forEach((section) => {
+    const sectionTop = section.offsetTop;
+    const sectionHeight = section.offsetHeight;
+    const sectionId = section.getAttribute("id");
+
+    if (
+      scrollPosition >= sectionTop &&
+      scrollPosition < sectionTop + sectionHeight
+    ) {
+      navItems.forEach((link) => {
+        link.classList.remove("active");
+
+        if (link.getAttribute("href") === `#${sectionId}`) {
+          link.classList.add("active");
+        }
+      });
+    }
+  });
+}
+
+window.addEventListener("scroll", updateActiveNav);
 
 
 /* =========================================================
@@ -57,86 +78,54 @@ if (menuBtn && navLinks) {
 const typingElement = document.getElementById("typing");
 
 const typingWords = [
-    "AI & ML Enthusiast",
-    "Python Developer",
-    "Machine Learning",
-    "Web Developer",
-    "Computer Vision"
+  "Web Developer",
+  "Python Developer",
+  "AI & ML Enthusiast",
+  "Computer Vision Enthusiast"
 ];
 
 let wordIndex = 0;
 let characterIndex = 0;
 let isDeleting = false;
 
-
 function typeEffect() {
+  if (!typingElement) return;
 
-    if (!typingElement) {
-        return;
+  const currentWord = typingWords[wordIndex];
+
+  if (!isDeleting) {
+    typingElement.textContent = currentWord.substring(
+      0,
+      characterIndex + 1
+    );
+
+    characterIndex++;
+
+    if (characterIndex === currentWord.length) {
+      isDeleting = true;
+      setTimeout(typeEffect, 1500);
+      return;
     }
+  } else {
+    typingElement.textContent = currentWord.substring(
+      0,
+      characterIndex - 1
+    );
 
-    const currentWord = typingWords[wordIndex];
+    characterIndex--;
 
-    /* Typing */
-
-    if (!isDeleting) {
-
-        typingElement.textContent =
-            currentWord.substring(0, characterIndex + 1);
-
-        characterIndex++;
-
-        /* Word completed */
-
-        if (characterIndex === currentWord.length) {
-
-            isDeleting = true;
-
-            setTimeout(typeEffect, 1500);
-
-            return;
-        }
-
+    if (characterIndex === 0) {
+      isDeleting = false;
+      wordIndex = (wordIndex + 1) % typingWords.length;
     }
+  }
 
-    /* Deleting */
+  const speed = isDeleting ? 60 : 100;
 
-    else {
-
-        typingElement.textContent =
-            currentWord.substring(0, characterIndex - 1);
-
-        characterIndex--;
-
-        /* Word deleted */
-
-        if (characterIndex === 0) {
-
-            isDeleting = false;
-
-            wordIndex++;
-
-            if (wordIndex >= typingWords.length) {
-                wordIndex = 0;
-            }
-
-        }
-
-    }
-
-    const speed = isDeleting ? 50 : 90;
-
-    setTimeout(typeEffect, speed);
+  setTimeout(typeEffect, speed);
 }
 
-
-/* Start typing effect */
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    setTimeout(typeEffect, 500);
-
-});
+typeEffect();
 
 
 /* =========================================================
@@ -144,127 +133,75 @@ document.addEventListener("DOMContentLoaded", () => {
 ========================================================= */
 
 function openProject(
-    title,
-    category,
-    description,
-    result,
-    tech,
-    image
+  title,
+  category,
+  description,
+  result,
+  technologies,
+  image
 ) {
+  const modal = document.getElementById("projectModal");
 
-    const modal =
-        document.getElementById("projectModal");
+  const modalTitle = document.getElementById("modalTitle");
+  const modalCategory = document.getElementById("modalCategory");
+  const modalDescription = document.getElementById("modalDescription");
+  const modalResult = document.getElementById("modalResult");
+  const modalTech = document.getElementById("modalTech");
+  const modalImage = document.getElementById("modalImage");
 
-    const modalImage =
-        document.getElementById("modalImage");
+  if (!modal) return;
 
-    const modalCategory =
-        document.getElementById("modalCategory");
+  modalTitle.textContent = title;
+  modalCategory.textContent = category;
+  modalDescription.textContent = description;
+  modalResult.textContent = result;
+  modalTech.textContent = technologies;
 
-    const modalTitle =
-        document.getElementById("modalTitle");
+  modalImage.src = image;
+  modalImage.alt = title;
 
-    const modalDescription =
-        document.getElementById("modalDescription");
+  modal.classList.add("active");
+  modal.setAttribute("aria-hidden", "false");
 
-    const modalResult =
-        document.getElementById("modalResult");
-
-    const modalTech =
-        document.getElementById("modalTech");
-
-
-    if (!modal) {
-        return;
-    }
-
-
-    /* Add project information */
-
-    if (modalTitle) {
-        modalTitle.textContent = title;
-    }
-
-    if (modalCategory) {
-        modalCategory.textContent = category;
-    }
-
-    if (modalDescription) {
-        modalDescription.textContent = description;
-    }
-
-    if (modalResult) {
-        modalResult.textContent = result;
-    }
-
-    if (modalTech) {
-        modalTech.textContent = tech;
-    }
-
-
-    /* Project image */
-
-    if (modalImage) {
-
-        modalImage.src = image;
-        modalImage.alt = title;
-
-    }
-
-
-    /* Show modal */
-
-    modal.classList.add("active");
-
-    document.body.style.overflow = "hidden";
-
+  document.body.style.overflow = "hidden";
 }
 
 
-/* Close project modal */
+/* =========================================================
+   CLOSE PROJECT MODAL
+========================================================= */
 
 function closeProject() {
+  const modal = document.getElementById("projectModal");
 
-    const modal =
-        document.getElementById("projectModal");
+  if (!modal) return;
 
-    if (!modal) {
-        return;
-    }
+  modal.classList.remove("active");
+  modal.setAttribute("aria-hidden", "true");
 
-    modal.classList.remove("active");
-
-    document.body.style.overflow = "";
-
+  document.body.style.overflow = "";
 }
 
 
-/* Close modal by clicking outside */
+/* Close modal when clicking outside */
 
-const projectModal =
-    document.getElementById("projectModal");
+const projectModal = document.getElementById("projectModal");
 
 if (projectModal) {
-
-    projectModal.addEventListener("click", function(event) {
-
-        if (event.target === projectModal) {
-            closeProject();
-        }
-
-    });
-
+  projectModal.addEventListener("click", (event) => {
+    if (event.target === projectModal) {
+      closeProject();
+    }
+  });
 }
 
 
-/* Close modal using Escape key */
+/* Close modal with ESC */
 
-document.addEventListener("keydown", function(event) {
-
-    if (event.key === "Escape") {
-        closeProject();
-    }
-
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    closeProject();
+  }
 });
 
 
@@ -272,301 +209,204 @@ document.addEventListener("keydown", function(event) {
    BACK TO TOP
 ========================================================= */
 
-const backToTop =
-    document.getElementById("backToTop");
-
-
-window.addEventListener("scroll", () => {
-
-    if (!backToTop) {
-        return;
-    }
-
-    if (window.scrollY > 500) {
-
-        backToTop.classList.add("show");
-
-    } else {
-
-        backToTop.classList.remove("show");
-
-    }
-
-});
-
+const backToTop = document.getElementById("backToTop");
 
 if (backToTop) {
 
-    backToTop.addEventListener("click", () => {
+  window.addEventListener("scroll", () => {
 
-        window.scrollTo({
+    if (window.scrollY > 400) {
+      backToTop.classList.add("show");
+    } else {
+      backToTop.classList.remove("show");
+    }
 
-            top: 0,
-            behavior: "smooth"
+  });
 
-        });
+  backToTop.addEventListener("click", () => {
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+
+  });
+}
+
+
+/* =========================================================
+   EMAILJS CONTACT FORM
+========================================================= */
+
+const contactForm = document.getElementById("contactForm");
+const formStatus = document.getElementById("form-status");
+
+if (contactForm) {
+
+  contactForm.addEventListener("submit", function (event) {
+
+    event.preventDefault();
+
+    const submitButton =
+      contactForm.querySelector(".submit-btn");
+
+    /* Prevent multiple submissions */
+
+    if (submitButton.disabled) {
+      return;
+    }
+
+    /* Loading state */
+
+    submitButton.disabled = true;
+
+    submitButton.innerHTML =
+      'Sending... <i class="fa-solid fa-spinner fa-spin"></i>';
+
+    if (formStatus) {
+      formStatus.textContent = "Sending your message...";
+      formStatus.className = "sending";
+    }
+
+
+    /*
+      IMPORTANT:
+      Replace these with your EmailJS details.
+    */
+
+    const SERVICE_ID = "service_ay0pwgx";
+    const TEMPLATE_ID = "template_zxqj9js";
+
+
+    emailjs.sendForm(
+      SERVICE_ID,
+      TEMPLATE_ID,
+      contactForm
+    )
+
+    .then(function (response) {
+
+      console.log(
+        "EmailJS SUCCESS:",
+        response.status,
+        response.text
+      );
+
+      if (formStatus) {
+        formStatus.textContent =
+          "Message sent successfully! Thank you for contacting me.";
+        formStatus.className = "success";
+      }
+
+      /* Clear form */
+
+      contactForm.reset();
+
+      /* Restore button */
+
+      submitButton.disabled = false;
+
+      submitButton.innerHTML =
+        'Submit <i class="fa-solid fa-paper-plane"></i>';
+
+    })
+
+    .catch(function (error) {
+
+      console.error(
+        "EmailJS ERROR:",
+        error
+      );
+
+      if (formStatus) {
+
+        formStatus.textContent =
+          "Failed to send message. Please try again.";
+
+        formStatus.className = "error";
+
+      }
+
+      submitButton.disabled = false;
+
+      submitButton.innerHTML =
+        'Submit <i class="fa-solid fa-paper-plane"></i>';
 
     });
+
+  });
 
 }
 
 
 /* =========================================================
-   CONTACT FORM - EMAILJS
+   SMOOTH SCROLL
 ========================================================= */
 
-const form =
-    document.getElementById("contactForm");
+document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
 
-const fMsg =
-    document.getElementById("formMessage");
+  anchor.addEventListener("click", function (event) {
 
+    const targetId = this.getAttribute("href");
 
-if (form) {
+    if (!targetId || targetId === "#") {
+      return;
+    }
 
-    form.addEventListener("submit", async (e) => {
+    const target = document.querySelector(targetId);
 
-        e.preventDefault();
+    if (target) {
 
+      event.preventDefault();
 
-        /* Correct submit button class */
+      target.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
 
-        const btn =
-            form.querySelector(".submit-btn");
+    }
 
-
-        if (!btn) {
-            console.error("Submit button not found.");
-            return;
-        }
-
-
-        /* Show sending status */
-
-        btn.disabled = true;
-
-        btn.innerHTML =
-            'Sending... <i class="fa-solid fa-spinner fa-spin"></i>';
-
-
-        try {
-
-            /* Send form using EmailJS */
-
-            await emailjs.sendForm(
-                "service_ay0pwgx",
-                "template_zxqj9js",
-                form
-            );
-
-
-            /* Success message */
-
-            if (fMsg) {
-
-                fMsg.textContent =
-                    "✓ Message sent! I'll get back to you soon.";
-
-                fMsg.style.color =
-                    "var(--teal)";
-
-            }
-
-
-            /* Clear form */
-
-            form.reset();
-
-
-        } catch (error) {
-
-            console.error("EmailJS Error:", error);
-
-
-            /* Error message */
-
-            if (fMsg) {
-
-                fMsg.textContent =
-                    "✗ Failed to send. Please try again.";
-
-                fMsg.style.color =
-                    "var(--rose)";
-
-            }
-
-        } finally {
-
-            /* Restore button */
-
-            btn.disabled = false;
-
-            btn.innerHTML =
-                'Send Message <i class="fa-solid fa-paper-plane"></i>';
-
-
-            /* Clear status message */
-
-            setTimeout(() => {
-
-                if (fMsg) {
-                    fMsg.textContent = "";
-                }
-
-            }, 5000);
-
-        }
-
-    });
-
-}
-
-
-/* =========================================================
-   ACTIVE NAVIGATION
-========================================================= */
-
-const sections =
-    document.querySelectorAll("section[id]");
-
-const navigationLinks =
-    document.querySelectorAll(".nav-links a");
-
-
-function updateActiveNavigation() {
-
-    let currentSection = "";
-
-
-    sections.forEach(section => {
-
-        const sectionTop =
-            section.offsetTop - 150;
-
-        const sectionHeight =
-            section.offsetHeight;
-
-
-        if (
-            window.scrollY >= sectionTop &&
-            window.scrollY < sectionTop + sectionHeight
-        ) {
-
-            currentSection =
-                section.getAttribute("id");
-
-        }
-
-    });
-
-
-    navigationLinks.forEach(link => {
-
-        link.classList.remove("active");
-
-
-        if (
-            link.getAttribute("href") ===
-            `#${currentSection}`
-        ) {
-
-            link.classList.add("active");
-
-        }
-
-    });
-
-}
-
-
-window.addEventListener(
-    "scroll",
-    updateActiveNavigation
-);
-
-
-window.addEventListener(
-    "load",
-    updateActiveNavigation
-);
-
-
-/* =========================================================
-   IMAGE ERROR CHECK
-========================================================= */
-
-document.querySelectorAll("img").forEach(image => {
-
-    image.addEventListener("error", () => {
-
-        console.warn(
-            "Image not found:",
-            image.src
-        );
-
-    });
+  });
 
 });
 
 
 /* =========================================================
-   SMOOTH NAVIGATION
+   HEADER SCROLL EFFECT
 ========================================================= */
 
-document.querySelectorAll(
-    'a[href^="#"]'
-).forEach(anchor => {
+const header = document.querySelector(".header");
 
-    anchor.addEventListener("click", function(event) {
+window.addEventListener("scroll", () => {
 
-        const targetId =
-            this.getAttribute("href");
+  if (!header) return;
 
-
-        if (
-            !targetId ||
-            targetId === "#"
-        ) {
-
-            return;
-
-        }
-
-
-        const target =
-            document.querySelector(targetId);
-
-
-        if (!target) {
-
-            return;
-
-        }
-
-
-        event.preventDefault();
-
-
-        const header =
-            document.querySelector(".header");
-
-        const headerHeight =
-            header ? header.offsetHeight : 0;
-
-
-        const targetPosition =
-            target.getBoundingClientRect().top +
-            window.scrollY -
-            headerHeight;
-
-
-        window.scrollTo({
-
-            top: targetPosition,
-            behavior: "smooth"
-
-        });
-
-    });
+  if (window.scrollY > 50) {
+    header.classList.add("scrolled");
+  } else {
+    header.classList.remove("scrolled");
+  }
 
 });
+
+
+/* =========================================================
+   PAGE LOAD
+========================================================= */
+
+window.addEventListener("load", () => {
+
+  document.body.classList.add("loaded");
+
+  updateActiveNav();
+
+});
+
+
+/* =========================================================
+   CONSOLE MESSAGE
+========================================================= */
+
+console.log(
+  "Arpita Bhattacharya Portfolio Loaded Successfully 🚀"
+);
