@@ -1282,123 +1282,138 @@ section {
 ========================================================= */
 
 .contact-section {
-    background: var(--white);
+    background: #eaf2ff;
+    padding-top: 70px;
+    padding-bottom: 70px;
 }
 
 .contact-container {
-    max-width: 1050px;
+    max-width: 935px;
     margin: auto;
 
     display: grid;
 
-    grid-template-columns: 0.85fr 1.15fr;
-
-    gap: 60px;
-}
-
-.contact-info h3 {
-    color: var(--navy);
-
-    font-size: 28px;
-
-    margin-bottom: 12px;
-}
-
-.contact-info > p {
-    color: var(--text-light);
-
-    font-size: 14px;
-
-    margin-bottom: 30px;
-}
-
-.contact-item {
-    display: flex;
+    grid-template-columns: 1fr 1fr;
     align-items: center;
 
-    gap: 15px;
-
-    margin-bottom: 22px;
+    gap: 45px;
+    padding: 26px 34px;
+    background: var(--white);
+    border-radius: 16px;
+    box-shadow: 0 12px 30px rgba(7, 26, 61, 0.12);
 }
 
-.contact-icon {
-    width: 48px;
-    height: 48px;
+.section-heading h2 i {
+    color: var(--navy);
+    font-size: 0.85em;
+}
 
+.contact-visual {
+    min-height: 325px;
+    position: relative;
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
+    background: #f4f7ff;
+    border-radius: 50% 50% 42% 42%;
+}
 
-    flex-shrink: 0;
+.visual-circle {
+    position: absolute;
+    border-radius: 50%;
+    background: #dce8ff;
+}
 
+.visual-circle-large {
+    width: 255px;
+    height: 255px;
+    bottom: -76px;
+}
+
+.visual-circle-small {
+    width: 72px;
+    height: 72px;
+    top: 36px;
+    right: 48px;
+    background: #c8dcff;
+}
+
+.contact-visual-icon {
+    position: relative;
+    z-index: 2;
+    width: 148px;
+    height: 148px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: var(--white);
     background: var(--blue);
-
-    border-radius: 12px;
+    border-radius: 42% 42% 50% 50%;
+    font-size: 70px;
+    box-shadow: 0 14px 25px rgba(23, 105, 255, 0.24);
 }
 
-.contact-item span {
-    display: block;
-
-    color: var(--text-light);
-
-    font-size: 11px;
-}
-
-.contact-item a {
-    color: var(--navy);
-
-    font-size: 13px;
-    font-weight: 600;
-
-    transition: 0.3s ease;
-}
-
-.contact-item a:hover {
+.visual-card {
+    position: absolute;
+    z-index: 3;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: var(--blue);
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(7, 26, 61, 0.14);
+    font-size: 19px;
+}
+
+.visual-card-top {
+    top: 87px;
+    left: 25%;
+}
+
+.visual-card-bottom {
+    right: 24%;
+    bottom: 70px;
 }
 
 
 /* CONTACT FORM */
 
 .contact-form {
-    padding: 35px;
-
-    background: var(--off-white);
-
-    border: 1px solid var(--border);
-
-    border-radius: var(--radius);
+    padding: 4px 5px;
 }
 
 .form-group {
-    margin-bottom: 18px;
+    position: relative;
+    margin-bottom: 17px;
 }
 
 .form-group label {
-    display: block;
-
+    position: absolute;
+    top: 0;
+    left: 15px;
+    height: 100%;
+    display: flex;
+    align-items: center;
     color: var(--navy);
-
-    font-size: 13px;
-    font-weight: 600;
-
-    margin-bottom: 7px;
+    font-size: 15px;
 }
 
 .form-group input,
 .form-group textarea {
     width: 100%;
 
-    padding: 13px 15px;
+    min-height: 45px;
+    padding: 10px 15px 10px 42px;
 
     color: var(--text);
 
-    background: var(--white);
-
-    border: 1px solid var(--border);
-
-    border-radius: 10px;
+    background: #e6eefc;
+    border: 1px solid #6b7280;
+    border-radius: 5px;
 
     outline: none;
 
@@ -1417,6 +1432,33 @@ section {
         0 0 0 3px rgba(23, 105, 255, 0.10);
 }
 
+.form-group textarea {
+    min-height: 115px;
+}
+
+.form-group:has(textarea) label {
+    align-items: flex-start;
+    padding-top: 13px;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.submit-btn {
+    min-height: 46px;
+    float: right;
+    padding: 0 24px;
+}
+
 .submit-btn {
     border: none;
 }
@@ -1427,58 +1469,85 @@ section {
 ========================================================= */
 
 .footer {
-    padding: 45px 8% 25px;
+    padding: 25px 8% 20px;
 
     color: var(--white);
 
     background: var(--navy);
 
-    text-align: center;
+    text-align: left;
 }
 
 .footer-container {
-    max-width: 1000px;
+    max-width: 1120px;
     margin: auto;
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr 1.15fr;
+    column-gap: 58px;
+    row-gap: 18px;
+    align-items: start;
 }
 
-.footer-logo {
-    font-size: 28px;
-    font-weight: 800;
+.footer-column h3 {
+    color: var(--white);
+    font-size: 21px;
+    font-weight: 500;
+    margin-bottom: 13px;
 }
 
-.footer-logo span {
-    color: var(--blue-light);
+.footer-column p,
+.footer-column a {
+    color: #c3cde0;
+    font-size: 13px;
+    line-height: 1.7;
 }
 
-.footer-container > p {
-    color: #b7c3d8;
+.footer-about p {
+    max-width: 300px;
+    margin-bottom: 17px;
+}
 
+.footer-links a,
+.footer-contact a,
+.footer-contact p {
+    display: block;
+    margin-bottom: 7px;
+}
+
+.footer-links a i {
+    color: var(--white);
+    margin-right: 4px;
     font-size: 12px;
+}
 
-    margin-top: 8px;
+.footer-contact a i,
+.footer-contact p i {
+    width: 18px;
+    color: #ffb400;
+    margin-right: 5px;
+}
+
+.footer-column a:hover {
+    color: var(--white);
 }
 
 .footer-social {
     display: flex;
-    justify-content: center;
-
-    gap: 12px;
-
-    margin: 22px 0;
+    gap: 11px;
+    margin-top: 16px;
 }
 
 .footer-social a {
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    color: var(--white);
-
-    border: 1px solid rgba(255, 255, 255, 0.25);
-
+    color: var(--navy);
+    background: #edf0f5;
+    border: 0;
     border-radius: 50%;
 
     transition: 0.3s ease;
@@ -1493,15 +1562,18 @@ section {
 }
 
 .footer-line {
+    grid-column: 1 / -1;
     width: 100%;
     height: 1px;
 
     background: rgba(255, 255, 255, 0.12);
 
-    margin: 20px 0;
+    margin: 10px 0;
 }
 
 .copyright {
+    grid-column: 1 / -1;
+    text-align: center;
     color: #8fa0bb !important;
 }
 
