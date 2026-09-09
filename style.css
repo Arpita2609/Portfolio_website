@@ -132,10 +132,10 @@ section {
     top: 0;
     left: 0;
     z-index: 1000;
-    background: rgba(255, 255, 255, 0.96);
+    background: rgba(7, 26, 61, 0.96);
     backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(223, 230, 240, 0.8);
-    box-shadow: 0 5px 22px rgba(7, 26, 61, 0.04);
+    border-bottom: 1px solid rgba(142, 177, 255, 0.2);
+    box-shadow: 0 5px 22px rgba(3, 12, 30, 0.22);
 }
 
 .navbar {
@@ -152,13 +152,13 @@ section {
 }
 
 .logo {
-    color: var(--navy);
+    color: var(--white);
     font-size: 25px;
     font-weight: 800;
 }
 
 .logo span {
-    color: var(--blue);
+    color: var(--blue-light);
 }
 
 .nav-links {
@@ -169,7 +169,7 @@ section {
 
 .nav-links a {
     position: relative;
-    color: var(--navy);
+    color: rgba(255, 255, 255, 0.86);
     font-size: 13px;
     font-weight: 600;
     transition: 0.3s ease;
@@ -191,7 +191,7 @@ section {
 
 .nav-links a:hover,
 .nav-links a.active {
-    color: var(--blue);
+    color: var(--white);
 }
 
 .nav-links a:hover::after,
@@ -226,12 +226,9 @@ section {
     padding: 132px 8% 88px;
 
     background:
-        linear-gradient(
-            135deg,
-            #ffffff 0%,
-            #f7f9fc 55%,
-            #eaf2ff 100%
-        );
+        radial-gradient(circle at 18% 20%, rgba(79, 123, 255, 0.16), transparent 20%),
+        radial-gradient(circle at 82% 18%, rgba(124, 171, 255, 0.12), transparent 18%),
+        linear-gradient(135deg, #071a3d 0%, #0b2452 52%, #06152d 100%);
 
     display: flex;
     align-items: center;
@@ -253,7 +250,7 @@ section {
     display: inline-flex;
     align-items: center;
     gap: 9px;
-    color: var(--navy);
+    color: var(--blue-light);
     font-size: 42px;
     font-weight: 700;
     letter-spacing: 2px;
@@ -363,7 +360,7 @@ section {
 }
 
 .hero-content h1 {
-    color: var(--navy);
+    color: var(--white);
     max-width: 720px;
     font-size: clamp(48px, 6vw, 82px);
     line-height: 1.05;
@@ -373,23 +370,23 @@ section {
 }
 
 .hero-content h1 span {
-    color: var(--blue);
+    color: #9bbcff;
 }
 
 .hero-content h2 {
-    color: var(--navy-light);
+    color: rgba(255, 255, 255, 0.9);
     font-size: 21px;
     font-weight: 600;
     margin-bottom: 22px;
 }
 
 .hero-content h2 span {
-    color: var(--blue);
+    color: #9bbcff;
 }
 
 .hero-description {
     max-width: 590px;
-    color: var(--text-light);
+    color: rgba(220, 232, 255, 0.8);
     font-size: 15px;
     margin-bottom: 32px;
 }
@@ -1435,6 +1432,28 @@ section {
     padding-bottom: 70px;
 }
 
+/* Navy background theme for every portfolio section */
+.about-section,
+.skills-section,
+.education-section,
+.experience-section,
+.projects-section,
+.certificates-section,
+.contact-section {
+    background: linear-gradient(135deg, #071a3d 0%, #0b2452 52%, #06152d 100%);
+}
+
+.section-heading h2,
+.section-heading h2 i,
+.about-content h3 {
+    color: var(--white);
+}
+
+.section-intro,
+.about-content p {
+    color: rgba(220, 232, 255, 0.82);
+}
+
 .contact-container {
     max-width: 935px;
     margin: auto;
@@ -1833,7 +1852,7 @@ section {
 
         gap: 20px;
 
-        background: var(--white);
+        background: var(--navy);
 
         border-top: 1px solid var(--border);
 
