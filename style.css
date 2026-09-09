@@ -916,28 +916,66 @@ section {
 }
 
 .experience-container {
-    max-width: 1000px;
+    position: relative;
+    max-width: 1080px;
     margin: auto;
+    padding: 18px 0 24px;
+}
 
-    display: grid;
-
-    grid-template-columns: 1fr 1fr;
-
-    gap: 25px;
+.experience-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 3px;
+    background: linear-gradient(180deg, transparent, var(--blue), transparent);
+    transform: translateX(-50%);
 }
 
 .experience-card {
+    position: relative;
     display: flex;
     gap: 20px;
 
-    padding: 28px;
+    width: calc(50% - 42px);
+    margin-bottom: 36px;
+    padding: 26px;
 
-    background: var(--white);
+    background: rgba(15, 43, 94, 0.88);
 
     border: 1px solid var(--border);
-    border-radius: var(--radius);
+    border-radius: 14px;
 
     transition: 0.3s ease;
+}
+
+.experience-card:nth-child(odd) {
+    margin-right: auto;
+}
+
+.experience-card:nth-child(even) {
+    margin-left: auto;
+}
+
+.experience-card::before {
+    content: "";
+    position: absolute;
+    top: 28px;
+    width: 17px;
+    height: 17px;
+    background: var(--blue);
+    border: 4px solid var(--navy);
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px rgba(47, 124, 255, 0.2);
+}
+
+.experience-card:nth-child(odd)::before {
+    right: -52px;
+}
+
+.experience-card:nth-child(even)::before {
+    left: -52px;
 }
 
 .experience-card:hover {
@@ -977,7 +1015,7 @@ section {
 }
 
 .experience-content h3 {
-    color: var(--navy);
+    color: var(--white);
 
     font-size: 18px;
     line-height: 1.4;
@@ -994,7 +1032,7 @@ section {
 }
 
 .experience-content p {
-    color: var(--text-light);
+    color: rgba(220, 232, 255, 0.8);
 
     font-size: 13px;
 }
@@ -2167,10 +2205,34 @@ section {
 
     /* Experience */
 
-    .experience-card {
-        flex-direction: column;
+    .experience-container {
+        padding-left: 28px;
+    }
 
+    .experience-container::before {
+        left: 8px;
+        transform: none;
+    }
+
+    .experience-card {
+        width: 100%;
+        margin: 0 0 26px;
+        flex-direction: column;
         padding: 22px;
+    }
+
+    .experience-card:nth-child(odd),
+    .experience-card:nth-child(even) {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .experience-card::before,
+    .experience-card:nth-child(odd)::before,
+    .experience-card:nth-child(even)::before {
+        left: -28px;
+        right: auto;
+        top: 26px;
     }
 
 
